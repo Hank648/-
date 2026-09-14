@@ -1,0 +1,10 @@
+{
+  "name": "健康記錄",
+  "short_name": "健康記錄",
+  "description": "中高齡族群健康數據追蹤與門診溝通工具",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#115e59",
+  "icons": []
+}
