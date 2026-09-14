@@ -7,7 +7,7 @@ import Charts from '../components/Charts';
 import StatsCards from '../components/StatsCards';
 import DoctorMode from '../components/DoctorMode';
 import RecordList from '../components/RecordList';
-import { loadRecords, saveRecords, ensureDemoData } from '../lib/storage';
+import { loadRecords, saveRecords } from '../lib/storage';
 import { getStreak, formatDateTime } from '../lib/utils';
 
 export default function HomePage() {
@@ -17,7 +17,8 @@ export default function HomePage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const data = ensureDemoData();
+    // 一開始空白，讓使用者自己慢慢累積紀錄
+    const data = loadRecords();
     setRecords(data);
     setReady(true);
   }, []);
