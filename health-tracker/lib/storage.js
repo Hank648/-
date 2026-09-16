@@ -1,4 +1,5 @@
-const STORAGE_KEY = 'health-tracker-records';
+const STORAGE_KEY = 'health-tracker-records-v2'; // 換新代號，讓舊瀏覽器裡殘留的資料自動失效
+const APPOINTMENT_KEY = 'health-tracker-next-appointment';
 
 export function loadRecords() {
   if (typeof window === 'undefined') return [];
@@ -89,4 +90,23 @@ export function ensureDemoData() {
     return demo;
   }
   return existing;
+}
+
+export function loadAppointment() {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem(APPOINTMENT_KEY) || null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveAppointment(dateStr) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(APPOINTMENT_KEY, dateStr);
+}
+
+export function clearAppointment() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(APPOINTMENT_KEY);
 }
