@@ -7,6 +7,7 @@ import Charts from '../components/Charts';
 import StatsCards from '../components/StatsCards';
 import DoctorMode from '../components/DoctorMode';
 import RecordList from '../components/RecordList';
+import AppointmentCountdown from '../components/AppointmentCountdown';
 import { loadRecords, saveRecords } from '../lib/storage';
 import { getStreak, formatDateTime } from '../lib/utils';
 
@@ -33,6 +34,13 @@ export default function HomePage() {
     const next = records.filter(r => r.id !== id);
     setRecords(next);
     saveRecords(next);
+  };
+
+  const handleClearAll = () => {
+    if (confirm('確定要清空所有紀錄嗎？這個動作無法復原。')) {
+      setRecords([]);
+      saveRecords([]);
+    }
   };
 
   const streak = getStreak(records);
@@ -126,6 +134,9 @@ export default function HomePage() {
       </header>
 
       <main className="max-w-2xl mx-auto p-4 space-y-5">
+        {/* 回診倒數 */}
+        <AppointmentCountdown />
+
         {/* Streak badge */}
         {streak >= 3 && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex items-center gap-3">
@@ -155,7 +166,17 @@ export default function HomePage() {
         )}
 
         {tab === 'list' && (
-          <RecordList records={records} onDelete={handleDelete} />
+          <>
+            {records.length > 0 && (
+              <button
+                onClick={handleClearAll}
+                className="w-full py-3 rounded-xl border border-slate-300 text-slate-500 text-base font-medium"
+              >
+                清空所有紀錄
+              </button>
+            )}
+            <RecordList records={records} onDelete={handleDelete} />
+          </>
         )}
       </main>
 
